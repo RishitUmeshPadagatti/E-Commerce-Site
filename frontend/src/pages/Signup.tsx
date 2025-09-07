@@ -66,6 +66,11 @@ function Signup({ onLogin }: { onLogin: (token: string, user: UserInterface) => 
 					</button>
 				</form>
 
+				{/* Info textbox */}
+				<div className="mt-4 rounded-md border border-yellow-400 bg-yellow-50 p-3 text-xs text-yellow-800">
+					⚠️ The backend's free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+				</div>
+
 				<p className="mt-6 text-center text-sm text-black/70">
 					Already have an account?{" "}
 					<a

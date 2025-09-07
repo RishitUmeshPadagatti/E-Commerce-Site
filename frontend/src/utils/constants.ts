@@ -1,5 +1,5 @@
 // export const backendBaseUrl = "http://localhost:3000"
-export const backendBaseUrl = "http://13.233.140.249:3000"
+export const backendBaseUrl = "https://e-commerce-site-fho9.onrender.com"
 
 export const loginEndpoint = `${backendBaseUrl}/auth/login`
 export const signupEndpoint = `${backendBaseUrl}/auth/signup`
