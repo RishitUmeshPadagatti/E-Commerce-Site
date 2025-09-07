@@ -1,4 +1,4 @@
-export const backendBaseUrl = "http://localhost:"
+export const backendBaseUrl = "http://localhost:3000"
 
 export const loginEndpoint = `${backendBaseUrl}/auth/login`
 export const signupEndpoint = `${backendBaseUrl}/auth/signup`
