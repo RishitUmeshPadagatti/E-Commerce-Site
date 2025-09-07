@@ -15,7 +15,14 @@ authRouter.post("/signup", async (req: Request, res: Response) => {
 		const user = await prisma.user.create({
 			data: { email, password: hashed, name },
 		});
-		res.json(user);
+
+		const jwtSecret = process.env.JWT_PASSWORD;
+		if (!jwtSecret) {
+			res.status(500).json({ error: "JWT secret is not defined in environment variables" });
+			return;
+		}
+		const token = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: "1w" });
+		res.json({ token, user });
 	} catch (err) {
 		res.status(400).json({ error: "User already exists" });
 	}
@@ -40,8 +47,8 @@ authRouter.post("/login", async (req: Request, res: Response) => {
 		res.status(500).json({ error: "JWT secret is not defined in environment variables" });
 		return;
 	}
-	const token = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: "1d" });
-	res.json({ token });
+	const token = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: "1w" });
+	res.json({ token, user });
 })
 
 export default authRouter

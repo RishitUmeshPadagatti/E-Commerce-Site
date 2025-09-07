@@ -5,8 +5,42 @@ const userRouter = express.Router();
 
 const prisma = new PrismaClient();
 
+// Getting all items
+userRouter.post("/all-items", async (req: Request, res: Response): Promise<void> => {
+	try {
+		const { userId } = req.body;
+
+		if (!userId) {
+			res.status(400).json({ error: "userId is required" });
+			return;
+		}
+
+		// fetch all items
+		const items = await prisma.item.findMany();
+
+		// fetch user's cart items
+		const cartItems = await prisma.cartItem.findMany({
+			where: { userId: Number(userId) },
+			select: { itemId: true },
+		});
+
+		const cartItemIds = new Set(cartItems.map(c => c.itemId));
+
+		// attach inCart flag
+		const itemsWithCartFlag = items.map(item => ({
+			...item,
+			inCart: cartItemIds.has(item.id),
+		}));
+
+		res.json(itemsWithCartFlag);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Failed to fetch items" });
+	}
+})
+
 // Getting all the items in the cart
-userRouter.get("/cart", async (req: Request, res: Response): Promise<void> => {
+userRouter.post("/cart", async (req: Request, res: Response): Promise<void> => {
 	const { userId } = req.body;
 
 	try {

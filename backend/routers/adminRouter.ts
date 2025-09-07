@@ -7,10 +7,10 @@ const prisma = new PrismaClient();
 
 // Create Item
 adminRouter.post("/create-item", async (req: Request, res: Response): Promise<void> => {
-	const { name, description, price, category } = req.body;
+	const { name, description, price, category, imageUrl } = req.body;
 	try {
 		const item = await prisma.item.create({
-			data: { name, description, price, category },
+			data: { name, description, price, category, imageUrl },
 		});
 		res.json(item);
 	} catch (err) {
