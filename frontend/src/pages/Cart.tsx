@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import type { CartItemInterface } from "../utils/interfaces";
+import { deleteCartItemEndpoint, getItemsInCartEndpoint, updateCartItemQuantityEndpoint } from "../utils/constants";
 
 export default function Cart() {
 	const [cartItems, setCartItems] = useState<CartItemInterface[]>([]);
@@ -12,7 +13,7 @@ export default function Cart() {
 		const fetchCart = async () => {
 			try {
 				const res = await axios.post(
-					"http://localhost:3000/user/cart",
+					getItemsInCartEndpoint,
 					{ userId },
 					{ headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
 				);
@@ -32,7 +33,7 @@ export default function Cart() {
 
 		try {
 			await axios.put(
-				"http://localhost:3000/user/update-cart-quantity",
+				updateCartItemQuantityEndpoint,
 				{ cartItemId, quantity: newQty },
 				{ headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
 			);
@@ -50,7 +51,7 @@ export default function Cart() {
 	const deleteCartItem = async (cartItemId: number) => {
 		try {
 			await axios.delete(
-				"http://localhost:3000/user/delete-cart",
+				deleteCartItemEndpoint,
 				{
 					data: { cartItemId },
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
