@@ -44,7 +44,7 @@ function Login({ onLogin }: { onLogin: (token: string, user: UserInterface) => v
 		<div className="flex min-h-screen items-center justify-center bg-white">
 			<div className="w-full max-w-sm rounded-lg border border-black/20 bg-white p-8 shadow-lg">
 				<h2 className="mb-6 text-center text-2xl font-bold text-black">
-					Welcome Back
+					Welcome Back testing
 				</h2>
 				<form onSubmit={handleSubmit} className="flex flex-col space-y-4">
 					<input
